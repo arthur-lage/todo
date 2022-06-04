@@ -6,7 +6,6 @@ import express from "express";
 import cors from "cors";
 import { userRoutes } from "./routes/user";
 import { todoRoutes } from "./routes/todo";
-import { pool } from "./db/db";
 
 const app = express();
 
@@ -16,13 +15,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/users", userRoutes);
-app.use("/todos", todoRoutes);
-
-pool.query("SELECT NOW()", (err, res) => {
-  console.log(err, res)
-  pool.end()
-})
+app.use("/api/users", userRoutes);
+app.use("/api/todos", todoRoutes);
 
 app.listen(PORT, () => {
   console.log("Server is running on port " + PORT);
