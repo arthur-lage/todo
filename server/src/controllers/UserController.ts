@@ -17,7 +17,7 @@ const UserController = {
     try {
       const { id } = req.params;
 
-      const user = await pool.query(`SELECT * FROM users WHERE id='${id}'`);
+      const user = await pool.query(`SELECT * FROM users WHERE user_id='${id}'`);
 
       return res.status(200).json({ user: user.rows });
     } catch (err: any) {
@@ -50,6 +50,8 @@ const UserController = {
           '${email}',
           '${hashedPassword}'
         )`);
+
+      return res.status(200).json({ message: "User created successfully!" });
     } catch (err: any) {
       console.log(err);
       return res.status(500).json({ message: err.message });
@@ -99,7 +101,7 @@ const UserController = {
     try {
       const { id } = req.params;
 
-      await pool.query(`DELETE FROM users WHERE id='${id}'`);
+      await pool.query(`DELETE FROM users WHERE user_id='${id}'`);
 
       return res
         .status(200)
